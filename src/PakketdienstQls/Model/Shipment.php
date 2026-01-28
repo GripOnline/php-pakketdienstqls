@@ -60,6 +60,11 @@ class Shipment
     private $reference;
 
     /**
+     * @var Dimensions
+     */
+    private $dimensions;
+
+    /**
      * Weight in gram
      * @var int
      */
@@ -112,6 +117,12 @@ class Shipment
      * @var Contact
      */
     private $deliveryContact;
+
+    /**
+     * Only set when retrieving a shipment from the API
+     * @var ProductCombination
+     */
+    private $productCombination;
 
     /**
      * @var Product
@@ -364,6 +375,22 @@ class Shipment
     }
 
     /**
+     * @return Dimensions
+     */
+    public function getDimensions()
+    {
+        return $this->dimensions;
+    }
+
+    /**
+     * @param Dimensions $dimensions
+     */
+    public function setDimensions($dimensions)
+    {
+        $this->dimensions = $dimensions;
+    }
+
+    /**
      * @return int
      */
     public function getWeight()
@@ -489,6 +516,22 @@ class Shipment
     public function setDeliveryContact($deliveryContact)
     {
         $this->deliveryContact = $deliveryContact;
+    }
+
+    /**
+     * @return ProductCombination
+     */
+    public function getProductCombination()
+    {
+        return $this->productCombination;
+    }
+
+    /**
+     * @param ProductCombination $productCombination
+     */
+    public function setProductCombination($productCombination)
+    {
+        $this->productCombination = $productCombination;
     }
 
     /**
