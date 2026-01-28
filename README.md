@@ -49,7 +49,7 @@ Retrieving a shipment to determine its shipment status
 $shipment = $client->getShipmentById($companyId, $shipmentId);
 // determine shipment status
 $status = $shipment->getStatus();
-echo $status
+echo $status;
 ```
 
 Find pickup location points near a postal code
