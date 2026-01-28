@@ -86,3 +86,12 @@ $webhookTypes = $client->getWebhookTypes($companyId);
 var_dump($webhookTypes);
 $client->createWebhook($companyId, 'https://example.com/webhook', $webhookType);
 ```
+
+# History
+
+v1.1.0
+
+- ObjectTranscoder now parses Dimensions and ProductCombination when parsing Shipment data
+
+v1.0.0
+- initial release
