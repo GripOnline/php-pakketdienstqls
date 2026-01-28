@@ -5,7 +5,6 @@ namespace Grip\PakketdienstQls;
 use Grip\PakketdienstQls\Model\Contact;
 use Grip\PakketdienstQls\Model\ServicePoint;
 use Grip\PakketdienstQls\Model\Webhook;
-use Grip\PakketdienstQls\Model\WebhookType;
 
 class ObjectTranscoder
 {
@@ -30,7 +29,6 @@ class ObjectTranscoder
      */
     public function parseProductData($data)
     {
-
         $product = new Model\Product();
         $product->setId($data['id']);
         $product->setName($data['name']);
@@ -127,7 +125,7 @@ class ObjectTranscoder
         $productOption->setId($data['id']);
         $productOption->setName($data['name']);
         $productOption->setTag($data['tag']);
-        $productOption->setPrice($data['price']);
+        $productOption->setPrice($data['price'] ?? null);
         return $productOption;
     }
 
@@ -139,7 +137,7 @@ class ObjectTranscoder
     {
         $productCombination = new Model\ProductCombination();
         $productCombination->setId($data['id']);
-        $productCombination->setName($data['name']);
+        $productCombination->setName($data['name'] ?? null);
 
         $productOptions = [];
         if (isset($data['options'])) {
@@ -300,12 +298,20 @@ class ObjectTranscoder
             $shipment->setDeliveryContact($this->parseContactData($data['delivery_contact']));
         }
 
+        if (isset($data['product_combination'])) {
+            $shipment->setProductCombination($this->parseProductCombinationData($data['product_combination']));
+        }
+
         if (isset($data['product'])) {
             $shipment->setProduct($this->parseProductData($data['product']));
         }
 
         if (isset($data['reference'])) {
             $shipment->setReference($data['reference']);
+        }
+
+        if (isset($data['dimensions'])) {
+            $shipment->setDimensions($this->parseDimensions($data['dimensions']));
         }
 
         if (isset($data['weight'])) {
@@ -455,6 +461,20 @@ class ObjectTranscoder
         $data['oss'] = $contact->getOss();
 
         return $data;
+    }
+
+    /**
+     * @param array $data
+     * @return Model\Dimensions
+     */
+    public function parseDimensions($data)
+    {
+        $dimensions = new Model\Dimensions(
+            $data['length'],
+            $data['width'],
+            $data['height']
+        );
+        return $dimensions;
     }
 
     /**
